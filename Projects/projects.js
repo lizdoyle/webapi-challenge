@@ -7,7 +7,7 @@ const projectDb = require('../data/helpers/projectModel');
 router.post('/', validateProject, (req, res) => {
     const pjInfo = req.body;
 
-    if(!pjInfo.name || pjInfo.description) {
+    if(!pjInfo.name || !pjInfo.description) {
         return res.status(400).json({error: "Please provide name and description for the project."})
     }
     else {
@@ -45,9 +45,10 @@ router.post('/:id/actions', validateProjectId, validateProject, validateAction, 
 router.get('/', (req, res) => {
     const projects = req.body;
 
+    console.log( res)
     projectDb.get(projects)
         .then(projects => {
-            res.status(200).json(projects)
+            return res.status(200).json(projects)
         })
         .catch(err => {
             return res.status(500).json({error: "Cannot find any Project Information"})
@@ -62,7 +63,7 @@ router.get('/:id', (req, res) => {
         return res.status(404).json({message: "The project with the specified ID does not exist"})
     }
     else{
-        projectDb.getById(id)
+        projectDb.get(id)
             .then(projects => {
                 return res.status(200).json(projects)
             })
