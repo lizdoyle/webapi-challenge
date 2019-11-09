@@ -8,17 +8,17 @@ const server = express();
 
 server.use(express.json());
 
-server.use('/projects', projectRoute);
-server.use('/actions',actionRoute);
+server.use('/projects', logger, projectRoute);
+server.use('/actions', logger, actionRoute);
 
-// function logger(req, res, next) {
-//     console.log(
-//       `[${new Date().toISOString()}] ${req.method} to ${req.url} from ${req.get(
-//         'Origin'
-//       )}`
-//     );
-//     next();
-//   };
+function logger(req, res, next) {
+    console.log(
+      `[${new Date().toISOString()}] ${req.method} to ${req.url} from ${req.get(
+        'Origin'
+      )}`
+    );
+    next();
+  };
   
   
   module.exports = server;
