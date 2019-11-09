@@ -11,6 +11,13 @@ server.use(express.json());
 server.use('/projects', logger, projectRoute);
 server.use('/actions', logger, actionRoute);
 
+
+
+server.get('/',logger, (req, res) => {
+    res.send('Server is working');
+  });
+
+
 function logger(req, res, next) {
     console.log(
       `[${new Date().toISOString()}] ${req.method} to ${req.url} from ${req.get(
